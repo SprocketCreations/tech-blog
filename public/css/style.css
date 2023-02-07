@@ -1,0 +1,59 @@
+:root {
+
+	--primary-color: rgb(20, 20, 206);
+	--primary-color-darkened: rgb(27, 27, 168);
+	--text-light: white;
+	--text-dark: black;
+}
+
+* {
+	font-family: Arial, Helvetica, sans-serif;
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.navbar {
+	background-color: var(--primary-color);
+
+	width: 100%;
+	padding: .5em 1em;
+	margin: 0;
+
+	display: flex;
+	justify-content: space-between;
+}
+
+.navbar h1 {
+	color: var(--text-light);
+
+	margin: 0;
+	padding: 0;
+}
+
+.navbar ul {
+	list-style: none;
+
+	height: 100%;
+	margin: 0;
+	padding: 0;
+
+	display: flex;
+	align-items: center;
+	gap: .7em;
+}
+
+.navbar ul li a {
+	color: var(--text-light);
+	text-decoration: none;
+
+	padding: 0.4em 0.8em;
+	border-radius: 0.8em;
+}
+
+.navbar ul li a:hover {
+	background-color: var(--primary-color-darkened);
+}
