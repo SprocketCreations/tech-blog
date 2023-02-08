@@ -9,6 +9,11 @@ router.use("/comment", require("./comment.js"));
 
 router.post("/signup", async (req, res) => {
 	try {
+		// Check that email isnt taken
+		if (await User.findOne({ where: { email } })) {
+			return res.status(S.FORBIDDEN).json({message: R.FORBIDDEN, alert: "Error: Email is already taken."});
+		}
+
 		console.log(req.body);
 		const values = {
 			displayName: req.body.displayName,
@@ -17,10 +22,10 @@ router.post("/signup", async (req, res) => {
 		};
 		const user = await User.create(values);
 		req.session.userId = user.id;
-		return res.status(S.CREATED).send(R.CREATED);
+		return res.status(S.CREATED).json({message: R.CREATED});
 	} catch (error) {
 		console.log(error);
-		return res.status(S.INTERNAL_SERVER_ERROR).send(R.INTERNAL_SERVER_ERROR);
+		return res.status(S.INTERNAL_SERVER_ERROR).json({message: R.INTERNAL_SERVER_ERROR});
 	}
 });
 
@@ -31,25 +36,25 @@ router.post("/signin", async (req, res) => {
 		const user = await User.findOne({ where: { email } });
 		if (user && await bcrypt.compare(password, user.password)) {
 			req.session.userId = user.id;
-			return res.status(S.CREATED).send(R.CREATED);
+			return res.status(S.CREATED).json({message: R.CREATED});
 		}
-		return res.status(S.BAD_REQUEST).send("Email or password is incorrect.");
+		return res.status(S.FORBIDDEN).json({message: S.FORBIDDEN, alert: "Email or password is incorrect."});
 	} catch (error) {
 		console.log(error);
-		return res.status(S.INTERNAL_SERVER_ERROR).send(R.INTERNAL_SERVER_ERROR);
+		return res.status(S.INTERNAL_SERVER_ERROR).json({message: R.INTERNAL_SERVER_ERROR});
 	}
 });
 
 router.delete("/signout", async (req, res) => {
 	try {
-		if(req.session.userId) {
+		if (req.session.userId) {
 			req.session.userId = null;
-			return res.json(1);
+			return res.json({message: R.OK, rows: 1});
 		}
-		return res.status(S.NOT_FOUND).send(R.NOT_FOUND);
+		return res.status(S.NOT_FOUND).json({message: R.NOT_FOUND});
 	} catch (error) {
 		console.log(error);
-		return res.status(S.INTERNAL_SERVER_ERROR).send(R.INTERNAL_SERVER_ERROR);
+		return res.status(S.INTERNAL_SERVER_ERROR).json({message: R.INTERNAL_SERVER_ERROR});
 	}
 });
 
