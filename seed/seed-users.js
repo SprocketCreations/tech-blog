@@ -4,28 +4,31 @@ const data = [
 	{
 		displayName: "Joe",
 		email: "example@example.com",
-		password: "doug",
+		password: "DougTheR@t27",
 	}, {
 		displayName: "Loki",
 		email: "godofmischief@asguard.co.uk",
-		password: "ruler",
+		password: "Y0ur-Ruler",
 	}, {
 		displayName: "Alex",
 		email: "techno@never.dies",
-		password: "the_blade",
+		password: "The_B1ade",
 	}, {
 		displayName: "Darius",
 		email: "martyr@hotmail.com",
-		password: "achillies",
+		password: "Achillies77!",
 	}, {
 		displayName: "Andrew",
 		email: "andrew@gmail.com",
-		password: "password12",
+		password: "@Password12",
 	},
 ];
 
 const seedUsers = async () => {
-	await User.bulkCreate(data);
+	await User.bulkCreate(data, {
+		hooks: true,
+		validate: true,
+	});
 };
 
 module.exports = seedUsers;

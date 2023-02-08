@@ -4,18 +4,20 @@
 	--coolor-3: #EBEBEB;
 	--coolor-4: #CAD2C5;
 	--coolor-5: #84A98C;
+	--coolor-6: #36453B;
 
 
-	--primary-color: rgb(46, 33, 163);
-	--primary-color-darkened: rgb(46, 37, 128);
+	--primary-color: #2e21a3;
+	--primary-color-darkened: #2e2580;
 	--secondary-color: var(--coolor-2);
 	--secondary-color-darkened: #4c7070;
 
 
 	--text-light: white;
-	--text-dark: black;
+	--text-dark: rgb(180, 171, 171);
 
 	--navbar-height: 4em;
+	--footer-height: 2.5em;
 
 	--feed-width: 800px;
 	--feed-gap: 1em;
@@ -97,11 +99,15 @@ body {
 	background-color: var(--primary-color-darkened);
 }
 
+.main {
+	min-height: calc(100vh - calc(var(--navbar-height) + var(--footer-height)));
+}
+
 .foot {
 	background-color: var(--primary-color-darkened);
 
 	width: 100%;
-	/* height: 2em; */
+	height: var(--footer-height);
 
 	padding: .5em 1em;
 }
@@ -162,6 +168,128 @@ body {
 	padding: 1em;
 }
 
+.comments {
+	margin: 0;
+	padding: 0;
+
+	display: flex;
+	gap: .5em;
+}
+
+.column-left {
+	padding: .25em .5em;
+}
+
+.column-right {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+}
+
+.new-comment-form {
+	width: 100%;
+	text-align: end;
+}
+
+.new-comment-form textarea {
+	width: 100%;
+	min-height: 3em;
+}
+
+.textarea {
+	background-color: var(--coolor-6);
+
+	margin: 0;
+	padding: .5em 1em;
+	border-radius: 1em;
+}
+
+.textarea::placeholder {
+	color: var(--text-dark);
+}
+
+.textinput {
+	background-color: var(--coolor-6);
+
+	margin: 0;
+	padding: .25em .5em;
+	border-radius: .5em;
+
+	border: 1px solid var(--coolor-5);
+}
+
+.textinput::placeholder {
+	color: var(--text-dark);
+}
+
+.button {
+	background-color: var(--primary-color);
+	padding: .25em .5em;
+	border-radius: .5em;
+	border: none;
+}
+
+.button:hover {
+	background-color: var(--primary-color-darkened);
+}
+
+.signin-container {
+	width: 100%;
+
+	margin: 0;
+	padding: 0;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+
+.signin-card {
+	width: 300px;
+
+	padding: 0;
+	margin: 1em 0;
+}
+
+.signin-card>p {
+	text-align: center;
+	margin: 0;
+	margin-top: .5em;
+}
+
+.signin-form {
+	background-color: var(--secondary-color);
+	overflow: hidden;
+	border-radius: 1em;
+
+	padding: 0;
+	margin: 0;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.signin-form> :first-child {
+	background-color: var(--secondary-color-darkened);
+
+	padding: 2em 1em;
+
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+}
+
+.signin-form> :last-child {
+	padding: 1em;
+
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+
 @media screen and (max-width: calc(800px + 2em)) {
 	.feed {
 		width: calc(100% - var(--feed-gap));
@@ -175,5 +303,9 @@ body {
 
 	.my-navbar h1 {
 		display: none;
+	}
+
+	.comments {
+		display: block;
 	}
 }

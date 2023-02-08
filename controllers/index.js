@@ -1,5 +1,5 @@
 const { ReasonPhrases: R, StatusCodes: S } = require("http-status-codes");
-const { BlogPost, User } = require("../models");
+const { BlogPost, User, Comment } = require("../models");
 const router = require("express").Router();
 const Sequilize = require("sequelize");
 
@@ -37,9 +37,25 @@ router.get("/post/new", async (req, res) => {
 
 router.get("/post/:id", async (req, res) => {
 	try {
-		const post = await BlogPost.findByPk(req.params.id);
+		const post = await BlogPost.findByPk(req.params.id, {
+			attributes: ["title", "body", ["updated_at", "date"]],
+			include: [{
+				model: User,
+				attributes: [["display_name", "author"]],
+			}, {
+				model: Comment,
+				attributes: ["body", ["updated_at", "date"]],
+				include: [{
+					model: User,
+					attributes: [["display_name", "author"]],
+				}]
+			}],
+		});
 		if(post) {
 			const data = post.toJSON();
+			data.author = data.user.author;
+			data.user = null;
+			console.log(data);
 			return res.render("viewpost", data);
 		}
 		return res.status(S.NOT_FOUND).send(R.NOT_FOUND);

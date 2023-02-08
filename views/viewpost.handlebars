@@ -1,0 +1,33 @@
+<!--
+	Expected objects:
+	post: {
+		title: string,
+		body: string,
+		author: string,
+		date: string
+		comments: Array<{
+			body: string,
+			author: string,
+			date: string
+		}>
+	}
+-->
+
+<div class="feed">
+	{{> postcard}}
+	<div class="comments">
+		<div class="column-left">
+			<h2>Comments:</h2>
+		</div>
+		<div class="column-right">
+			<form id="submit-comment-form" class="new-comment-form">
+				<textarea required placeholder="Leave a comment." name="comment-body" id="comment-body"></textarea>
+				<button type="submit">Comment</button>
+			</form>
+			<script src="/js/submit-comment.js"></script>
+			{{#each comments as |comment|}}
+				{{> comment}}
+			{{/each}}
+		</div>
+	</div>
+</div>
