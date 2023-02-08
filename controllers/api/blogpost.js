@@ -6,9 +6,9 @@ router.get("/", async (req, res) => {
 	try {
 		const all = await BlogPost.findAll();
 		if (all) {
-			return req.json(all);
+			return res.json(all);
 		}
-		return req.status(S.NOT_FOUND).send(R.NOT_FOUND);
+		return res.status(S.NOT_FOUND).send(R.NOT_FOUND);
 	} catch (error) {
 		console.log(error);
 		return res.status(S.INTERNAL_SERVER_ERROR).send(R.INTERNAL_SERVER_ERROR);
@@ -18,9 +18,9 @@ router.get("/:id", async (req, res) => {
 	try {
 		const one = await BlogPost.findByPk(req.params.id);
 		if (one) {
-			return req.json(one);
+			return res.json(one);
 		}
-		return req.status(S.NOT_FOUND).send(R.NOT_FOUND);
+		return res.status(S.NOT_FOUND).send(R.NOT_FOUND);
 	} catch (error) {
 		console.log(error);
 		return res.status(S.INTERNAL_SERVER_ERROR).send(R.INTERNAL_SERVER_ERROR);
@@ -62,7 +62,7 @@ router.delete("/:id", async (req, res) => {
 		if (rows > 0) {
 			return res.json(rows);
 		}
-		return req.status(S.NOT_FOUND).send(R.NOT_FOUND);
+		return res.status(S.NOT_FOUND).send(R.NOT_FOUND);
 	} catch (error) {
 		console.log(error);
 		return res.status(S.INTERNAL_SERVER_ERROR).send(R.INTERNAL_SERVER_ERROR);

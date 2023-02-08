@@ -1,1 +1,16 @@
-<h1>Homepage</h1>
+<!--
+	Expected data:
+
+	posts: Array<{
+		title: string,
+		body: string,
+		author: string,
+		date: string
+	}>
+-->
+
+<div class="feed">
+	{{#each posts as |post|}}
+		{{> postcard}}
+	{{/each}}
+</div>

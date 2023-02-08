@@ -24,7 +24,7 @@ BlogPost.init(
 		sequelize,
 		freezeTableName: true,
 		modelName: "blog_posts",
-		timestamps: false,
+		timestamps: true,
 		underscored: true,
 	}
 );

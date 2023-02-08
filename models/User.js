@@ -27,7 +27,7 @@ User.init(
 			validate: {
 				notEmpty: true,
 				// Matches <7|no num|no upper|no lower|no special
-				not: /^.{0,7}|[^0-9]*|[^A-Z]*|[^a-z]*|[a-zA-Z0-9]*$/,
+				not: /^(.{0,7}|[^0-9]*|[^A-Z]*|[^a-z]*|[a-zA-Z0-9]*)$/,
 			},
 		}
 	},
@@ -38,8 +38,9 @@ User.init(
 		timestamps: false,
 		underscored: true,
 		hooks: {
-			beforeCreate: async (user, options) => {
+			beforeCreate: async user => {
 				user.password = await bcrypt.hash(user.password, 10);
+				return user;
 			},
 		}
 	}
