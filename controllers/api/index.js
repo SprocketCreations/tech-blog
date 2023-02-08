@@ -10,7 +10,7 @@ router.use("/comment", require("./comment.js"));
 router.post("/signup", async (req, res) => {
 	try {
 		// Check that email isnt taken
-		if (await User.findOne({ where: { email } })) {
+		if (await User.findOne({ where: { email: req.body.email } })) {
 			return res.status(S.FORBIDDEN).json({message: R.FORBIDDEN, alert: "Error: Email is already taken."});
 		}
 
