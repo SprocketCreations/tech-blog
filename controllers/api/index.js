@@ -43,6 +43,7 @@ router.post("/signin", async (req, res) => {
 router.delete("/signout", async (req, res) => {
 	try {
 		if(req.session.userId) {
+			req.session.userId = null;
 			return res.json(1);
 		}
 		return res.status(S.NOT_FOUND).send(R.NOT_FOUND);

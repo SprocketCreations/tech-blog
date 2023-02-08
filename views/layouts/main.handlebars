@@ -17,8 +17,14 @@
 			<h1>Technology Blogs</h1>
 			<ul>
 				<li><a class="button" href="/">Home</a></li>
+				
+				{{#if loggedIn}}
 				<li><a href="/dashboard">Dashboard</a></li>
+				<li><a id="signout" href="javascript:void(0);">Sign Out</a></li>
+				<script src="/js/signout.js"></script>
+				{{else}}
 				<li><a href="/signin">Sign In</a></li>
+				{{/if}}
 			</ul>
 		</nav>
 		<div class="navbar-gap"></div>

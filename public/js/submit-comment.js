@@ -12,15 +12,27 @@ form.addEventListener("submit", event => {
 
 const postComment = async (event) => {
 	outgoing = true;
-	const res = await fetch("/api/comment", {
-		method: "POST",
-		body: {
-			post: {
-				body: event.target[0].value,
-			}
-		}
-	});
-	event.target[0].value = null;
+	try {
+		const response = await fetch("/api/comment", {
+			method: "POST",
+			method: "POST",
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			redirect: 'follow',
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				post: {
+					body: event.target[0].value,
+				}
+			}),
+		});
+		const json = response.json();
+		console.log(json);
+		event.target[0].value = null;
+	} catch (error) {
+		console.log(error);
+	}
 	outgoing = false;
-	console.log(res);
 }

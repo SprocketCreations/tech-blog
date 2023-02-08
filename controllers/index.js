@@ -15,7 +15,6 @@ router.get("/", async (req, res) => {
 		}],
 	});
 	/** @type {Array<{title: string, body: string, author: string, date: string }>} */
-	console.log(allPosts);
 	const posts = allPosts.map(post => {
 		const json = post.toJSON();
 		json.author = json.user.author;
@@ -23,8 +22,7 @@ router.get("/", async (req, res) => {
 		json.date = new Date(json.date).toDateString();
 		return json;
 	});
-	console.log(posts);
-	return res.render('home', {posts});
+	return res.render('home', {posts, loggedIn: req.session.userId !== null});
 });
 
 router.get("/dashboard", async (req, res) => {

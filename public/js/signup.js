@@ -13,15 +13,23 @@ form.addEventListener("submit", event => {
 const signup = async (event) => {
 	outgoing = true;
 	try {
-		const res = await fetch("/api/signup", {
+		const response = await fetch("/api/signup", {
 			method: "POST",
-			body: {
+			method: "POST",
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			redirect: 'follow',
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
 				displayName: event.target[0].value,
 				email: event.target[1].value,
 				password: event.target[2].value,
-			},
+			}),
 		});
-		console.log(res);
+		const json = await response.json();
+		console.log(json);
 	} catch (error) {
 		console.log(error);
 	}

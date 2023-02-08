@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./server.js",
-    "watch": "nodemon ./server.js",
+    "watch": "nodemon ./server.js --ignore views/ --ignore seed/ --ignore public/ --ignore tests/",
     "seed": "node ./seed",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
