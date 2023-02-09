@@ -13,6 +13,7 @@ router.get("/", async (req, res) => {
 			model: User,
 			attributes: [["display_name", "author"]],
 		}],
+		order: [["updated_at", "DESC"]],
 	});
 	/** @type {Array<{title: string, body: string, author: string, date: string }>} */
 	const posts = allPosts.map(post => {
@@ -24,7 +25,7 @@ router.get("/", async (req, res) => {
 		json.id = null;
 		return json;
 	});
-	return res.render('home', {posts, loggedIn: req.session.userId !== null});
+	return res.render('home', { posts, loggedIn: req.session.userId !== null });
 });
 
 router.get("/dashboard", async (req, res) => {
@@ -44,19 +45,21 @@ router.get("/post/:id", async (req, res) => {
 				attributes: [["display_name", "author"]],
 			}, {
 				model: Comment,
+				separate: true,
+				order: [["updatedAt", "DESC"]],
 				attributes: ["body", ["updated_at", "date"]],
 				include: [{
 					model: User,
 					attributes: [["display_name", "author"]],
-				}]
+				}],
 			}],
 		});
-		if(post) {
+		if (post) {
 			const data = post.toJSON();
 			data.author = data.user.author;
 			data.user = null;
 			data.id = req.params.id;
-			return res.render("viewpost", {post: data, loggedIn: req.session.userId !== null});
+			return res.render("viewpost", { post: data, loggedIn: req.session.userId !== null });
 		}
 		return res.status(S.NOT_FOUND).send(R.NOT_FOUND);
 	} catch (error) {

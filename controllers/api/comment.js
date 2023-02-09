@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
 			const comment = await Comment.create(values);
 			return res.status(S.CREATED).json({ message: R.CREATED, comment: comment });
 		} else {
-			return res.status(S.FORBIDDEN).json({message: R.FORBIDDEN});
+			return res.status(S.FORBIDDEN).json({ message: R.FORBIDDEN });
 		}
 	} catch (error) {
 		console.log(error);
