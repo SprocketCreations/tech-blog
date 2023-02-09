@@ -7,33 +7,65 @@ router.use("/api", require("./api"));
 
 // Home page
 router.get("/", async (req, res) => {
-	const allPosts = await BlogPost.findAll({
-		attributes: ["id", "title", "body", ["updated_at", "date"]],
-		include: [{
-			model: User,
-			attributes: [["display_name", "author"]],
-		}],
-		order: [["updated_at", "DESC"]],
-	});
-	/** @type {Array<{title: string, body: string, author: string, date: string }>} */
-	const posts = allPosts.map(post => {
-		const json = post.toJSON();
-		json.author = json.user.author;
-		json.user = null;
-		json.date = new Date(json.date).toDateString();
-		json.viewLink = `/post/${json.id}`;
-		json.id = null;
-		return json;
-	});
-	return res.render('home', { posts, loggedIn: req.session.userId !== null });
+	try {
+		const allPosts = await BlogPost.findAll({
+			attributes: ["id", "title", "body", ["updated_at", "date"]],
+			include: [{
+				model: User,
+				attributes: [["display_name", "author"]],
+			}],
+			order: [["updated_at", "DESC"]],
+		});
+		/** @type {Array<{title: string, body: string, author: string, date: string }>} */
+		const posts = allPosts.map(post => {
+			const json = post.toJSON();
+			json.author = json.user?.author;
+			json.user = undefined;
+			json.date = new Date(json.date).toDateString();
+			json.viewLink = `/post/${json.id}`;
+			json.id = undefined;
+			return json;
+		});
+		return res.render('home', { posts, loggedIn: req.session.userId !== undefined });
+	} catch (error) {
+		console.log(error);
+		return res.status(S.INTERNAL_SERVER_ERROR).json({message: R.INTERNAL_SERVER_ERROR});
+	}
 });
 
 router.get("/dashboard", async (req, res) => {
-	return res.render("dashboard");
+	try {
+		if (req.session.userId) {
+			const allPosts = await BlogPost.findAll({
+				where: {userId: req.session.userId},
+				attributes: ["id", "title", "body", ["updated_at", "date"]],
+				include: [{
+					model: User,
+					attributes: [["display_name", "author"]],
+				}],
+				order: [["updated_at", "DESC"]],
+			});
+			const posts = allPosts.map(post => {
+				const json = post.toJSON();
+				return {
+					title: json.title,
+					body: json.body,
+					author: json.user?.author,
+					date: new Date(json.date).toDateString(),
+				};
+			})
+			console.log(posts);
+			return res.render("dashboard", {posts, loggedIn: true});
+		}
+		return res.status(S.FORBIDDEN).json({ message: R.FORBIDDEN });
+	} catch (error) {
+		console.log(error);
+		return res.status(S.INTERNAL_SERVER_ERROR).json({message: R.INTERNAL_SERVER_ERROR});
+	}
 });
 
 router.get("/post/new", async (req, res) => {
-	return res.render("newpost");
+	return res.render("newpost", {loggedIn: req.session.userId !== undefined});
 });
 
 router.get("/post/:id", async (req, res) => {
@@ -56,15 +88,21 @@ router.get("/post/:id", async (req, res) => {
 		});
 		if (post) {
 			const data = post.toJSON();
-			data.author = data.user.author;
-			data.user = null;
+			data.author = data.user?.author;
+			data.user = undefined;
 			data.id = req.params.id;
-			return res.render("viewpost", { post: data, loggedIn: req.session.userId !== null });
+			data.comments.forEach(comment => {
+				comment.author = comment.user?.author;
+				comment.user = undefined;
+				comment.date = new Date(comment.date).toDateString();
+			});
+			data.date = new Date(data.date).toDateString();
+			return res.render("viewpost", { post: data, loggedIn: req.session.userId !== undefined });
 		}
-		return res.status(S.NOT_FOUND).send(R.NOT_FOUND);
+		return res.status(S.NOT_FOUND).json({message: R.NOT_FOUND});
 	} catch (error) {
 		console.log(error);
-		return res.status(S.INTERNAL_SERVER_ERROR).send(R.INTERNAL_SERVER_ERROR);
+		return res.status(S.INTERNAL_SERVER_ERROR).json({message: R.INTERNAL_SERVER_ERROR});
 	}
 });
 

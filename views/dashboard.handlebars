@@ -1,0 +1,20 @@
+
+<!--
+	Expected:
+	posts: Array<{
+		title: string,
+		body: string,
+		author: string,
+		date: string
+	}>
+-->
+<div class="dashboard">
+	<div class="dashboard-right">
+		<a class="button" href="/post/new">Create new post</a>
+	</div>
+	<div class="dashboard-left">
+		{{#each posts as |post|}}
+		{{> postcard}}
+		{{/each}}
+	</div>
+</div>

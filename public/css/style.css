@@ -39,9 +39,9 @@ body {
 
 .nonchor {
 	color: inherit;
-    text-decoration: inherit;
-    font-family: inherit;
-    box-sizing: inherit;
+	text-decoration: inherit;
+	font-family: inherit;
+	box-sizing: inherit;
 }
 
 .nonchor:hover {
@@ -128,6 +128,35 @@ body {
 	margin: 0;
 }
 
+.dashboard {
+	width: 100%;
+
+	margin: 0;
+	padding: 1em;
+
+	display: flex;
+	flex-direction: row-reverse;
+	gap: 1em;
+}
+
+.dashboard-right {
+	padding: 1em;
+	text-align: center;
+}
+
+.dashboard-right>a {
+	color: var(--text-light);
+	text-decoration: none;
+
+	padding: .25em .5em;
+
+	font-size: 1.5em;
+}
+
+.dashboard-left {
+	flex: 1 1;
+}
+
 .feed {
 	width: var(--feed-width);
 	height: 100%;
@@ -195,6 +224,8 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: 1em;
+
+	flex-grow: 1;
 }
 
 .new-comment-form {
@@ -301,6 +332,18 @@ body {
 	align-items: center;
 }
 
+.new-post {}
+
+.new-post-form {
+	display: flex;
+
+	margin: 0;
+	padding: 1em;
+
+	flex-direction: column;
+	gap: 1em;
+}
+
 @media screen and (max-width: calc(800px + 2em)) {
 	.feed {
 		width: calc(100% - var(--feed-gap));
@@ -318,5 +361,9 @@ body {
 
 	.comments {
 		display: block;
+	}
+
+	.dashboard {
+		flex-direction: column;
 	}
 }
