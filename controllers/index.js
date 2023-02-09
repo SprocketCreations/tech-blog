@@ -8,7 +8,7 @@ router.use("/api", require("./api"));
 // Home page
 router.get("/", async (req, res) => {
 	const allPosts = await BlogPost.findAll({
-		attributes: ["title", "body", ["updated_at", "date"]],
+		attributes: ["id", "title", "body", ["updated_at", "date"]],
 		include: [{
 			model: User,
 			attributes: [["display_name", "author"]],
@@ -20,6 +20,8 @@ router.get("/", async (req, res) => {
 		json.author = json.user.author;
 		json.user = null;
 		json.date = new Date(json.date).toDateString();
+		json.viewLink = `/post/${json.id}`;
+		json.id = null;
 		return json;
 	});
 	return res.render('home', {posts, loggedIn: req.session.userId !== null});

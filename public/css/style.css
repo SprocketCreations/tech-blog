@@ -37,6 +37,17 @@ body {
 	padding: 0;
 }
 
+.nonchor {
+	color: inherit;
+    text-decoration: inherit;
+    font-family: inherit;
+    box-sizing: inherit;
+}
+
+.nonchor:hover {
+	box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
 .my-navbar {
 	background-color: var(--primary-color);
 
