@@ -55,7 +55,7 @@ router.get("/post/:id", async (req, res) => {
 			const data = post.toJSON();
 			data.author = data.user.author;
 			data.user = null;
-			console.log(data);
+			data.id = req.params.id;
 			return res.render("viewpost", {post: data, loggedIn: req.session.userId !== null});
 		}
 		return res.status(S.NOT_FOUND).send(R.NOT_FOUND);

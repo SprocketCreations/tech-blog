@@ -1,6 +1,7 @@
 <!--
 	Expected objects:
 	post: {
+		id: number
 		title: string,
 		body: string,
 		author: string,
@@ -24,6 +25,7 @@
 		<div class="column-right">
 			{{#if loggedIn}}
 				<form id="submit-comment-form" class="new-comment-form">
+					<input type="number" hidden value={{post.id}}>
 					<textarea required placeholder="Leave a comment." name="comment-body" id="comment-body" class="textarea"></textarea>
 					<button class="button" type="submit">Comment</button>
 				</form>

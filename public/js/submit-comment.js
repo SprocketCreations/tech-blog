@@ -24,13 +24,14 @@ const postComment = async (event) => {
 			},
 			body: JSON.stringify({
 				post: {
-					body: event.target[0].value,
+					body: event.target[1].value,
+					blogPostId: event.target[0].value,
 				}
 			}),
 		});
-		const json = response.json();
+		const json = await response.json();
 		console.log(json);
-		event.target[0].value = null;
+		document.location.reload();
 	} catch (error) {
 		console.log(error);
 	}
