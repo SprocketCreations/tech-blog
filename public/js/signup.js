@@ -30,6 +30,18 @@ const signup = async (event) => {
 		});
 		const json = await response.json();
 		console.log(json);
+
+		if (response.status === 201) {
+			const referrer = /referrer=(?<referrer>.*)(&|$)/.exec(document.location.href)?.groups?.referrer;
+			if (referrer) {
+				window.location.href = referrer;
+			} else {
+				//TODO: This doesn't work
+				window.location.href = document.referrer;
+			}
+		} else if (json.alert) {
+			alert(json.alert);
+		}
 	} catch (error) {
 		console.log(error);
 	}

@@ -38,7 +38,7 @@ router.post("/signin", async (req, res) => {
 			req.session.userId = user.id;
 			return res.status(S.CREATED).json({message: R.CREATED});
 		}
-		return res.status(S.FORBIDDEN).json({message: S.FORBIDDEN, alert: "Email or password is incorrect."});
+		return res.status(S.FORBIDDEN).json({message: R.FORBIDDEN, alert: "Email or password is incorrect."});
 	} catch (error) {
 		console.log(error);
 		return res.status(S.INTERNAL_SERVER_ERROR).json({message: R.INTERNAL_SERVER_ERROR});

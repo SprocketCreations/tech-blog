@@ -54,7 +54,7 @@ router.get("/post/:id", async (req, res) => {
 			data.author = data.user.author;
 			data.user = null;
 			console.log(data);
-			return res.render("viewpost", data);
+			return res.render("viewpost", {post: data, loggedIn: req.session.userId !== null});
 		}
 		return res.status(S.NOT_FOUND).send(R.NOT_FOUND);
 	} catch (error) {

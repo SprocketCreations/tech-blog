@@ -14,18 +14,22 @@
 -->
 
 <div class="feed">
-	{{> postcard}}
+	{{#with post}}
+		{{> postcard}}
+	{{/with}}
 	<div class="comments">
 		<div class="column-left">
 			<h2>Comments:</h2>
 		</div>
 		<div class="column-right">
-			<form id="submit-comment-form" class="new-comment-form">
-				<textarea required placeholder="Leave a comment." name="comment-body" id="comment-body"></textarea>
-				<button type="submit">Comment</button>
-			</form>
+			{{#if loggedIn}}
+				<form id="submit-comment-form" class="new-comment-form">
+					<textarea required placeholder="Leave a comment." name="comment-body" id="comment-body" class="textarea"></textarea>
+					<button class="button" type="submit">Comment</button>
+				</form>
+			{{/if}}
 			<script src="/js/submit-comment.js"></script>
-			{{#each comments as |comment|}}
+			{{#each post.comments as |comment|}}
 				{{> comment}}
 			{{/each}}
 		</div>
