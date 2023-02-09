@@ -1,8 +1,8 @@
 const { Sequelize } = require("sequelize");
 
 const getSequelize = ()=> {
-	if(process.env.JAWSDB){
-		return new Sequelize(process.env.JAWSDB);
+	if(process.env.JAWSDB_URL){
+		return new Sequelize(process.env.JAWSDB_URL);
 	}
 	return new Sequelize(
 		process.env.DB_NAME,
