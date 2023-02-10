@@ -57,7 +57,7 @@ router.get("/dashboard", async (req, res) => {
 			console.log(posts);
 			return res.render("dashboard", {posts, loggedIn: true});
 		}
-		return res.status(S.FORBIDDEN).json({ message: R.FORBIDDEN });
+		return res.redirect("/");
 	} catch (error) {
 		console.log(error);
 		return res.status(S.INTERNAL_SERVER_ERROR).json({message: R.INTERNAL_SERVER_ERROR});
