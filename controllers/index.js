@@ -49,6 +49,7 @@ router.get("/dashboard", async (req, res) => {
 				const json = post.toJSON();
 				return {
 					title: json.title,
+					viewLink: `/post/${json.id}`,
 					body: json.body,
 					author: json.user?.author,
 					date: new Date(json.date).toDateString(),
